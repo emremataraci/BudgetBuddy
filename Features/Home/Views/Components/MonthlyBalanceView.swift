@@ -7,27 +7,31 @@ struct MonthlyBalanceView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            BalanceRow(title: "Income", amount: income.formatAsCurrency())
-            BalanceRow(title: "Spending", amount: spending.formatAsCurrency())
-            BalanceRow(title: "Balance", amount: balance.formatAsCurrency())
+            BalanceRow(title: "Income", amount: income.formatAsCurrency(), amountColor: AppTheme.Colors.secondary)
+            BalanceRow(title: "Spending", amount: spending.formatAsCurrency(), amountColor: AppTheme.Colors.error)
+            BalanceRow(title: "Balance", amount: balance.formatAsCurrency(), amountColor: AppTheme.Colors.primary)
         }
-        .padding(.top)
+        .padding()
+        .background(AppTheme.Colors.background)
+        .cornerRadius(Constants.Layout.cornerRadius)
     }
 }
 
 struct BalanceRow: View {
     let title: String
     let amount: String
+    let amountColor: Color
     
     var body: some View {
         HStack {
             Text(title)
                 .font(AppTheme.Typography.body)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppTheme.Colors.textSecondary)
             Spacer()
             Text(amount)
                 .font(AppTheme.Typography.body)
                 .fontWeight(.medium)
+                .foregroundColor(amountColor)
         }
     }
 } 

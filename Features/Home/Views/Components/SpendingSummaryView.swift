@@ -8,19 +8,23 @@ struct SpendingSummaryView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Spending")
                 .font(AppTheme.Typography.title3)
-                .foregroundColor(.secondary)
+                .foregroundColor(AppTheme.Colors.textSecondary)
             
             Text(amount.formatAsCurrency())
                 .font(.system(size: 40, weight: .bold))
+                .foregroundColor(AppTheme.Colors.textDark)
             
             HStack {
                 Text("Last 30 Days")
-                    .foregroundColor(.secondary)
+                    .foregroundColor(AppTheme.Colors.textSecondary)
                 Text(change.formatAsPercentage())
-                    .foregroundColor(change >= 0 ? AppTheme.Colors.success : AppTheme.Colors.error)
+                    .foregroundColor(change >= 0 ? AppTheme.Colors.secondary : AppTheme.Colors.error)
             }
             .font(AppTheme.Typography.caption)
         }
+        .padding()
+        .background(AppTheme.Colors.background)
+        .cornerRadius(Constants.Layout.cornerRadius)
     }
 }
 
@@ -29,6 +33,7 @@ struct SpendingSummaryView_Previews: PreviewProvider {
     static var previews: some View {
         SpendingSummaryView(amount: 3000, change: 12)
             .padding()
+            .background(AppTheme.Colors.groupedBackground)
     }
 }
 

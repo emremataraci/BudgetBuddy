@@ -12,33 +12,50 @@ struct CategoryGridView: View {
                 CategoryCard(
                     title: category.name,
                     imageName: category.icon,
-                    color: Color(hex: category.color)
+                    amount: "$450" // Dummy amount
                 )
             }
         }
         .padding()
+        .background(AppTheme.Colors.background)
+        .cornerRadius(Constants.Layout.cornerRadius)
     }
 }
 
 struct CategoryCard: View {
     let title: String
     let imageName: String
-    let color: Color
+    let amount: String
     
     var body: some View {
-        VStack {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(color)
-                .frame(height: 120)
-                .overlay(
-                    Image(systemName: imageName)
-                        .font(.system(size: 30))
-                        .foregroundColor(.black.opacity(0.7))
-                )
+        VStack(spacing: 12) {
+            // Icon Circle
+            ZStack {
+                Circle()
+                    .fill(AppTheme.Colors.primary.opacity(0.1))
+                    .frame(width: 50, height: 50)
+                
+                Image(systemName: imageName)
+                    .font(.system(size: 24))
+                    .foregroundColor(AppTheme.Colors.primary)
+            }
             
-            Text(title)
-                .font(AppTheme.Typography.headline)
-                .padding(.top, 8)
+            VStack(spacing: 4) {
+                Text(title)
+                    .font(AppTheme.Typography.headline)
+                    .foregroundColor(AppTheme.Colors.textDark)
+                
+                Text(amount)
+                    .font(AppTheme.Typography.body)
+                    .foregroundColor(AppTheme.Colors.primary)
+            }
         }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(AppTheme.Colors.background)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        )
     }
 } 

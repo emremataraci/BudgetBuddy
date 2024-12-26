@@ -25,8 +25,20 @@ extension Color {
         )
     }
     
-    static let appPrimary = Color.blue
-    static let appSecondary = Color(hex: "D2B48C")
-    static let appBackground = Color(.systemBackground)
-    static let appGroupedBackground = Color(.systemGroupedBackground)
+    // Brand Colors
+    static let brandPrimary = Color(hex: "1E90FF")    // Dodger Blue
+    static let brandSuccess = Color(hex: "32CD32")    // Lime Green
+    static let brandWarning = Color(hex: "FFA500")    // Orange
+    static let brandBackground = Color(hex: "F5F5F5") // Light Gray
+    static let brandText = Color(hex: "696969")       // Dim Gray
+    static let brandTextDark = Color.black
+    
+    // Semantic Colors
+    static let appPrimary = brandPrimary
+    static let appSecondary = brandSuccess
+    static let appAccent = brandWarning
+    static let appBackground = brandBackground
+    static let appGroupedBackground = brandBackground.opacity(0.95)
+    static let appText = brandText
+    static let appTextSecondary = brandText.opacity(0.7)
 } 

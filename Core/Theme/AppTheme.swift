@@ -11,14 +11,24 @@ enum AppTheme {
     }
     
     enum Colors {
-        static let primary = Color.appPrimary
-        static let secondary = Color.appSecondary
+        // Primary Colors
+        static let primary = Color.brandPrimary
+        static let secondary = Color.brandSuccess
+        static let accent = Color.brandWarning
+        
+        // Background Colors
         static let background = Color.appBackground
         static let groupedBackground = Color.appGroupedBackground
         
-        static let success = Color.green
-        static let error = Color.red
-        static let warning = Color.orange
+        // Text Colors
+        static let text = Color.appText
+        static let textSecondary = Color.appTextSecondary
+        static let textDark = Color.brandTextDark
+        
+        // Status Colors
+        static let success = Color.brandSuccess
+        static let error = Color.brandWarning
+        static let warning = Color.brandWarning.opacity(0.8)
     }
     
     enum Shadows {
