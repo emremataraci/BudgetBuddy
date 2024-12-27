@@ -12,7 +12,7 @@ struct SpendingSummaryView: View {
             
             Text(amount.formatAsCurrency())
                 .font(.system(size: 40, weight: .bold))
-                .foregroundColor(AppTheme.Colors.textDark)
+                .foregroundColor(AppTheme.Colors.text)
             
             HStack {
                 Text("Last 30 Days")

@@ -16,7 +16,7 @@ struct HomeView: View {
                                 Text("This month")
                                     .font(.title)
                                     .fontWeight(.bold)
-                                    .foregroundColor(AppTheme.Colors.textDark)
+                                    .foregroundColor(AppTheme.Colors.text)
                                 Spacer()
                                 Button(action: viewModel.onSearchTapped) {
                                     Image(systemName: "magnifyingglass")
@@ -41,13 +41,15 @@ struct HomeView: View {
                         .background(
                             RoundedRectangle(cornerRadius: Constants.Layout.cornerRadius)
                                 .fill(AppTheme.Colors.background)
+                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         )
+                        .padding(.horizontal)
 
                         // Categories Grid
                         Text("See your spending by category")
                             .font(.title2)
                             .fontWeight(.semibold)
-                            .foregroundColor(AppTheme.Colors.textDark)
+                            .foregroundColor(AppTheme.Colors.text)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal)
 

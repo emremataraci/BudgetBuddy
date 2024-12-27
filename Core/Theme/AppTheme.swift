@@ -23,7 +23,7 @@ enum AppTheme {
         // Text Colors
         static let text = Color.appText
         static let textSecondary = Color.appTextSecondary
-        static let textDark = Color.brandTextDark
+        static let textDark = Color.appTextDark
         
         // Status Colors
         static let success = Color.brandSuccess

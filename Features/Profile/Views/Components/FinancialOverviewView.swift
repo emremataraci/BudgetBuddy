@@ -8,7 +8,7 @@ struct FinancialOverviewView: View {
         VStack(spacing: 16) {
             Text("Financial Overview")
                 .font(.headline)
-                .foregroundColor(AppTheme.Colors.textDark)
+                .foregroundColor(AppTheme.Colors.text)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             HStack(spacing: 12) {
@@ -21,7 +21,7 @@ struct FinancialOverviewView: View {
                     Text(totalSavings.formatAsCurrency())
                         .font(AppTheme.Typography.title3)
                         .fontWeight(.bold)
-                        .foregroundColor(Color(hex: "0066CC"))
+                        .foregroundColor(AppTheme.Colors.primary)
                 }
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -37,7 +37,7 @@ struct FinancialOverviewView: View {
                     Text(monthlyBudget.formatAsCurrency())
                         .font(AppTheme.Typography.title3)
                         .fontWeight(.bold)
-                        .foregroundColor(Color(hex: "2AAA2A"))
+                        .foregroundColor(AppTheme.Colors.secondary)
                 }
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)

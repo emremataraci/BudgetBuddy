@@ -23,7 +23,7 @@ struct ProfileSettingsItem: View {
                     .frame(width: 24)
                 
                 Text(title)
-                    .foregroundColor(AppTheme.Colors.textDark)
+                    .foregroundColor(AppTheme.Colors.text)
                 
                 Spacer()
                 

@@ -27,11 +27,34 @@ struct BudgetBuddyApp: App {
 class AppState: ObservableObject {
     @Published var selectedTab: Int = 0
     @Published var user: UserModel?
-    @Published var isDarkMode: Bool = false
+    @Published var isDarkMode: Bool {
+        willSet {
+            objectWillChange.send()
+            UserDefaults.standard.set(newValue, forKey: "isDarkMode")
+        }
+    }
     
     init() {
+        // Load dark mode preference
+        self.isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         // TODO: Load user data
         self.user = UserModel(name: "Emre Mataracı", email: "emre@example.com")
+        
+        // Add observer for dark mode changes
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(darkModeChanged),
+            name: NSNotification.Name("darkModeChanged"),
+            object: nil
+        )
+    }
+    
+    @objc private func darkModeChanged() {
+        objectWillChange.send()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

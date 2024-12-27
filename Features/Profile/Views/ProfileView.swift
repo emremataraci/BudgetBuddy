@@ -11,13 +11,13 @@ struct ProfileView: View {
                 Section {
                     ProfileHeaderView()
                 }
-                .listRowBackground(Color.clear)
+                .listRowBackground(AppTheme.Colors.background)
                 
                 // Financial Overview
                 Section {
                     FinancialOverviewView(totalSavings: 12450, monthlyBudget: 3200)
                 }
-                .listRowBackground(Color.clear)
+                .listRowBackground(AppTheme.Colors.background)
                 .listRowInsets(EdgeInsets())
                 
                 // Account Settings
@@ -37,6 +37,7 @@ struct ProfileView: View {
                         icon: "link"
                     )
                 }
+                .foregroundColor(AppTheme.Colors.text)
                 
                 // App Settings
                 Section("App Settings") {
@@ -51,14 +52,21 @@ struct ProfileView: View {
                             .frame(width: 24)
                         
                         Text("Dark Mode")
-                            .foregroundColor(AppTheme.Colors.textDark)
+                            .foregroundColor(AppTheme.Colors.text)
                         
                         Spacer()
                         
-                        Toggle("", isOn: $appState.isDarkMode)
-                            .tint(AppTheme.Colors.secondary)
+                        Toggle("", isOn: Binding(
+                            get: { appState.isDarkMode },
+                            set: { newValue in
+                                appState.isDarkMode = newValue
+                                NotificationCenter.default.post(name: NSNotification.Name("darkModeChanged"), object: nil)
+                            }
+                        ))
+                        .tint(AppTheme.Colors.secondary)
                     }
                 }
+                .foregroundColor(AppTheme.Colors.text)
                 
                 // Support
                 Section {
@@ -73,6 +81,8 @@ struct ProfileView: View {
                 }
             }
             .navigationTitle("Profile")
+            .background(AppTheme.Colors.groupedBackground)
+            .scrollContentBackground(.hidden)
             .alert("Sign Out", isPresented: $showSignOutAlert) {
                 Button("Cancel", role: .cancel) {}
                 Button("Sign Out", role: .destructive) {
@@ -115,7 +125,7 @@ struct ProfileHeaderView: View {
                 Text(appState.user?.name ?? "")
                     .font(.title3)
                     .fontWeight(.semibold)
-                    .foregroundColor(AppTheme.Colors.textDark)
+                    .foregroundColor(AppTheme.Colors.text)
                 
                 Text(appState.user?.email ?? "")
                     .font(.subheadline)
