@@ -24,23 +24,55 @@ struct ProfileView: View {
 
 struct ProfileHeaderView: View {
     @EnvironmentObject private var appState: AppState
+    @State private var showImagePicker = false
+    @State private var profileImage: UIImage?
     
     var body: some View {
         HStack {
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .frame(width: 60, height: 60)
-                .foregroundColor(.blue)
+            Button(action: {
+                showImagePicker = true
+            }) {
+                if let image = profileImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                        .overlay(editOverlay)
+                } else {
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(AppTheme.Colors.primary)
+                        .overlay(editOverlay)
+                }
+            }
             
             VStack(alignment: .leading) {
                 Text(appState.user?.name ?? "")
                     .font(.headline)
                 Text(appState.user?.email ?? "")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(AppTheme.Colors.textSecondary)
             }
         }
         .padding(.vertical)
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker(selectedImage: $profileImage)
+        }
+    }
+    
+    private var editOverlay: some View {
+        ZStack {
+            Circle()
+                .fill(Color.black.opacity(0.4))
+                .frame(width: 30, height: 30)
+                .offset(x: 25, y: 25)
+            
+            Image(systemName: "pencil")
+                .foregroundColor(.white)
+                .offset(x: 25, y: 25)
+        }
     }
 }
 
