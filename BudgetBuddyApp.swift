@@ -18,6 +18,7 @@ struct BudgetBuddyApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(appState)
+                .preferredColorScheme(appState.isDarkMode ? .dark : .light)
         }
     }
 }
@@ -26,6 +27,7 @@ struct BudgetBuddyApp: App {
 class AppState: ObservableObject {
     @Published var selectedTab: Int = 0
     @Published var user: UserModel?
+    @Published var isDarkMode: Bool = false
     
     init() {
         // TODO: Load user data

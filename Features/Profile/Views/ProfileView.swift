@@ -2,22 +2,85 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject private var appState: AppState
+    @State private var showSignOutAlert = false
     
     var body: some View {
         NavigationView {
             List {
+                // Profile Header
                 Section {
                     ProfileHeaderView()
                 }
+                .listRowBackground(Color.clear)
                 
-                Section("Settings") {
-                    SettingsItemView(title: "Account Info", icon: "person.circle")
-                    SettingsItemView(title: "Notifications", icon: "bell")
-                    SettingsItemView(title: "Theme", icon: "paintbrush")
-                    SettingsItemView(title: "Help", icon: "questionmark.circle")
+                // Financial Overview
+                Section {
+                    FinancialOverviewView(totalSavings: 12450, monthlyBudget: 3200)
+                }
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
+                
+                // Account Settings
+                Section("Account Settings") {
+                    ProfileSettingsItem(
+                        title: "Personal Information",
+                        icon: "person.circle"
+                    )
+                    
+                    ProfileSettingsItem(
+                        title: "Security",
+                        icon: "lock"
+                    )
+                    
+                    ProfileSettingsItem(
+                        title: "Linked Accounts",
+                        icon: "link"
+                    )
+                }
+                
+                // App Settings
+                Section("App Settings") {
+                    ProfileSettingsItem(
+                        title: "Notifications",
+                        icon: "bell"
+                    )
+                    
+                    HStack {
+                        Image(systemName: "moon.fill")
+                            .foregroundColor(AppTheme.Colors.primary)
+                            .frame(width: 24)
+                        
+                        Text("Dark Mode")
+                            .foregroundColor(AppTheme.Colors.textDark)
+                        
+                        Spacer()
+                        
+                        Toggle("", isOn: $appState.isDarkMode)
+                            .tint(AppTheme.Colors.secondary)
+                    }
+                }
+                
+                // Support
+                Section {
+                    Button(action: { showSignOutAlert = true }) {
+                        HStack {
+                            Spacer()
+                            Text("Sign Out")
+                                .foregroundColor(.red)
+                            Spacer()
+                        }
+                    }
                 }
             }
             .navigationTitle("Profile")
+            .alert("Sign Out", isPresented: $showSignOutAlert) {
+                Button("Cancel", role: .cancel) {}
+                Button("Sign Out", role: .destructive) {
+                    // TODO: Implement sign out
+                }
+            } message: {
+                Text("Are you sure you want to sign out?")
+            }
         }
     }
 }
@@ -28,7 +91,7 @@ struct ProfileHeaderView: View {
     @State private var profileImage: UIImage?
     
     var body: some View {
-        HStack {
+        HStack(spacing: 16) {
             Button(action: {
                 showImagePicker = true
             }) {
@@ -48,15 +111,20 @@ struct ProfileHeaderView: View {
                 }
             }
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(appState.user?.name ?? "")
-                    .font(.headline)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(AppTheme.Colors.textDark)
+                
                 Text(appState.user?.email ?? "")
                     .font(.subheadline)
                     .foregroundColor(AppTheme.Colors.textSecondary)
             }
+            
+            Spacer()
         }
-        .padding(.vertical)
+        .padding(.vertical, 8)
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(selectedImage: $profileImage)
         }
@@ -72,19 +140,6 @@ struct ProfileHeaderView: View {
             Image(systemName: "pencil")
                 .foregroundColor(.white)
                 .offset(x: 25, y: 25)
-        }
-    }
-}
-
-struct SettingsItemView: View {
-    let title: String
-    let icon: String
-    
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .foregroundColor(.blue)
-            Text(title)
         }
     }
 }
