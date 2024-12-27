@@ -10,18 +10,18 @@ struct NewTransactionView: View {
     
     // Expense Categories
     private let expenseCategories = [
-        "Daily Expenses",
-        "Bills",
+        "Other Expenses",
         "Personal",
-        "Other Expenses"
+        "Bills",
+        "Daily Expenses"
     ]
     
     // Income Categories
     private let incomeCategories = [
-        "Regular Income",
-        "Business",
+        "Other Income",
         "Investments",
-        "Other Income"
+        "Business",
+        "Regular Income"
     ]
     
     private var currentCategories: [String] {
@@ -69,7 +69,7 @@ struct NewTransactionView: View {
                         color: AppTheme.Colors.secondary,
                         action: { 
                             transactionType = "income"
-                            category = incomeCategories[0]
+                            category = "Regular Income"
                         }
                     )
                 }
