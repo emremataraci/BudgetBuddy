@@ -108,6 +108,9 @@ struct GoalsView: View {
                     }
                 }
             }
+            .sheet(isPresented: $showAddGoalSheet) {
+                AddGoalSheet()
+            }
         }
     }
 }
@@ -186,6 +189,183 @@ struct GoalCardView: View {
         .background(Color.white)
         .cornerRadius(16)
         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+    }
+}
+
+struct AddGoalSheet: View {
+    @Environment(\.dismiss) var dismiss
+    @State private var goalName: String = ""
+    @State private var goalType: String = "Savings"
+    @State private var targetAmount: Double = 0.0
+    @State private var deadline: Date = Date()
+    @State private var description: String = ""
+    @State private var showDatePicker = false
+    
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        return formatter
+    }
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            HStack {
+                Text("Add New Goal")
+                    .font(.headline)
+                Spacer()
+                Button(action: { dismiss() }) {
+                    Image(systemName: "xmark")
+                        .foregroundColor(.gray)
+                }
+            }
+            .padding(.bottom, 10)
+            
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Goal Name*")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    TextField("Enter goal name", text: $goalName)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(uiColor: .systemBackground))
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        )
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Goal Type*")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    Menu {
+                        Button("Savings") { goalType = "Savings" }
+                        Button("Investment") { goalType = "Investment" }
+                        Button("Debt") { goalType = "Debt" }
+                    } label: {
+                        HStack {
+                            Text(goalType)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(uiColor: .systemBackground))
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        )
+                    }
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Target Amount*")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    HStack {
+                        Text("$")
+                            .foregroundColor(.gray)
+                        TextField("0.00", value: $targetAmount, format: .number)
+                            .keyboardType(.decimalPad)
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color(uiColor: .systemBackground))
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                    )
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Deadline*")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    Button(action: {
+                        showDatePicker = true
+                    }) {
+                        HStack {
+                            Text(dateFormatter.string(from: deadline))
+                                .foregroundColor(.black)
+                            Spacer()
+                            Image(systemName: "calendar")
+                                .foregroundColor(.gray)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(uiColor: .systemBackground))
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        )
+                    }
+                }
+                .sheet(isPresented: $showDatePicker) {
+                    NavigationView {
+                        DatePicker("", selection: $deadline, displayedComponents: .date)
+                            .datePickerStyle(.graphical)
+                            .onChange(of: deadline) { _ in
+                                showDatePicker = false
+                            }
+                            .navigationTitle("Select Deadline")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button("Done") {
+                                        showDatePicker = false
+                                    }
+                                }
+                            }
+                    }
+                    .presentationDetents([.medium])
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Description")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    TextField("Add any additional notes...", text: $description)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(uiColor: .systemBackground))
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        )
+                }
+            }
+            
+            Spacer()
+            
+            VStack(spacing: 12) {
+                Button(action: {
+                    // TODO: Save goal logic
+                    dismiss()
+                }) {
+                    Text("Save Goal")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: { dismiss() }) {
+                    Text("Cancel")
+                        .foregroundColor(.primary)
+                }
+            }
+        }
+        .padding()
+        .background(Color(uiColor: .systemGroupedBackground))
     }
 }
 
