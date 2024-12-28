@@ -21,7 +21,7 @@ struct ContentView: View {
             
             GoalsView()
                 .tabItem {
-                    Label("Goal", systemImage: "target")
+                    Label("Goals", systemImage: "target")
                 }
                 .tag(1)
             

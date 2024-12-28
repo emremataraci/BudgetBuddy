@@ -3,165 +3,189 @@ import SwiftUI
 struct GoalsView: View {
     @EnvironmentObject private var appState: AppState
     @State private var showAddGoalSheet = false
-    @State private var selectedDate = Calendar.current.date(byAdding: .month, value: 2, to: Date())!
     
-    // Dummy goal data
-    let goal = GoalModel(
-        title: "New iPhone",
-        targetAmount: 1299,
-        currentAmount: 850,
-        deadline: Calendar.current.date(byAdding: .month, value: 2, to: Date())!,
-        category: "Electronics"
-    )
+    // Sample goals data
+    let goals = [
+        GoalModel(
+            title: "House Down Payment",
+            targetAmount: 50000,
+            currentAmount: 15000,
+            deadline: Calendar.current.date(byAdding: .month, value: 12, to: Date())!,
+            status: .onTrack
+        ),
+        GoalModel(
+            title: "Emergency Fund",
+            targetAmount: 10000,
+            currentAmount: 8000,
+            deadline: Calendar.current.date(byAdding: .month, value: 8, to: Date())!,
+            status: .almostThere
+        ),
+        GoalModel(
+            title: "New Car",
+            targetAmount: 20000,
+            currentAmount: 2000,
+            deadline: Calendar.current.date(byAdding: .month, value: 3, to: Date())!,
+            status: .behindSchedule
+        )
+    ]
+    
+    var totalSaved: Double {
+        goals.reduce(0) { $0 + $1.currentAmount }
+    }
+    
+    var targetTotal: Double {
+        goals.reduce(0) { $0 + $1.targetAmount }
+    }
     
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 24) {
-                    // Main Goal Card
-                    VStack(spacing: 20) {
-                        // Goal Icon and Title
-                        VStack(spacing: 12) {
-                            ZStack {
-                                Circle()
-                                    .fill(AppTheme.Colors.primary.opacity(0.1))
-                                    .frame(width: 80, height: 80)
-                                
-                                Image(systemName: "iphone")
-                                    .font(.system(size: 36))
+                VStack(spacing: 20) {
+                    // Goals Overview
+                    VStack(spacing: 16) {
+                        HStack {
+                            Text("Goals Overview")
+                                .font(.headline)
+                            Spacer()
+                            Text("\(goals.count) Active Goals")
+                                .foregroundColor(.gray)
+                                .font(.subheadline)
+                        }
+                        
+                        HStack(spacing: 16) {
+                            // Total Saved
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Total Saved")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                Text("$\(Int(totalSaved))")
+                                    .font(.title2)
                                     .foregroundColor(AppTheme.Colors.primary)
-                            }
-                            
-                            Text(goal.title)
-                                .font(AppTheme.Typography.title2)
-                                .foregroundColor(AppTheme.Colors.textDark)
-                        }
-                        .padding(.top)
-                        
-                        // Progress Circle
-                        ZStack {
-                            Circle()
-                                .stroke(AppTheme.Colors.primary.opacity(0.1), lineWidth: 20)
-                            
-                            Circle()
-                                .trim(from: 0, to: goal.progress)
-                                .stroke(AppTheme.Colors.secondary, style: StrokeStyle(lineWidth: 20, lineCap: .round))
-                                .rotationEffect(.degrees(-90))
-                            
-                            VStack(spacing: 8) {
-                                Text("\(Int(goal.progress * 100))%")
-                                    .font(.system(size: 44, weight: .bold))
-                                    .foregroundColor(AppTheme.Colors.secondary)
-                                
-                                Text("Complete")
-                                    .font(AppTheme.Typography.body)
-                                    .foregroundColor(AppTheme.Colors.textSecondary)
-                            }
-                        }
-                        .frame(width: 200, height: 200)
-                        .padding(.vertical)
-                        
-                        // Amount Details
-                        VStack(spacing: 16) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text("Current")
-                                        .font(AppTheme.Typography.caption)
-                                        .foregroundColor(AppTheme.Colors.textSecondary)
-                                    Text("$\(Int(goal.currentAmount))")
-                                        .font(AppTheme.Typography.title3)
-                                        .foregroundColor(AppTheme.Colors.textDark)
-                                }
-                                
-                                Spacer()
-                                
-                                VStack(alignment: .trailing) {
-                                    Text("Target")
-                                        .font(AppTheme.Typography.caption)
-                                        .foregroundColor(AppTheme.Colors.textSecondary)
-                                    Text("$\(Int(goal.targetAmount))")
-                                        .font(AppTheme.Typography.title3)
-                                        .foregroundColor(AppTheme.Colors.textDark)
-                                }
-                            }
-                            
-                            // Remaining Amount
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Remaining")
-                                    .font(AppTheme.Typography.caption)
-                                    .foregroundColor(AppTheme.Colors.textSecondary)
-                                
-                                Text("$\(Int(goal.targetAmount - goal.currentAmount))")
-                                    .font(AppTheme.Typography.title3)
-                                    .foregroundColor(AppTheme.Colors.accent)
+                                    .fontWeight(.bold)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .padding()
-                        .background(AppTheme.Colors.background)
-                        .cornerRadius(Constants.Layout.cornerRadius)
-                        .shadow(radius: 2)
-                        
-                        // Target Date
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Target Date")
-                                .font(AppTheme.Typography.caption)
-                                .foregroundColor(AppTheme.Colors.textSecondary)
+                            .padding()
+                            .background(AppTheme.Colors.primary.opacity(0.1))
+                            .cornerRadius(12)
                             
-                            DatePicker(
-                                "Select Date",
-                                selection: $selectedDate,
-                                in: Date()...,
-                                displayedComponents: [.date]
-                            )
-                            .datePickerStyle(.compact)
-                            .labelsHidden()
-                            .tint(AppTheme.Colors.primary)
+                            // Target
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Target")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                Text("$\(Int(targetTotal))")
+                                    .font(.title2)
+                                    .foregroundColor(.green)
+                                    .fontWeight(.bold)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                            .background(Color.green.opacity(0.1))
+                            .cornerRadius(12)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                        .background(AppTheme.Colors.background)
-                        .cornerRadius(Constants.Layout.cornerRadius)
-                        .shadow(radius: 2)
                     }
                     .padding()
-                    .background(AppTheme.Colors.background)
-                    .cornerRadius(Constants.Layout.cornerRadius)
-                    .shadow(radius: 4)
+                    .background(Color.white)
+                    .cornerRadius(16)
                     
-                    // Add Money Button
-                    Button(action: {
-                        // TODO: Implement add money action
-                    }) {
-                        HStack {
-                            Image(systemName: "plus.circle.fill")
-                            Text("Add Money")
+                    // Goals List
+                    VStack(spacing: 16) {
+                        ForEach(goals) { goal in
+                            GoalCardView(goal: goal)
                         }
-                        .font(AppTheme.Typography.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(AppTheme.Colors.secondary)
-                        .cornerRadius(Constants.Layout.cornerRadius)
                     }
-                    .padding(.horizontal)
                 }
                 .padding()
             }
-            .navigationTitle("My Goal")
-            .foregroundColor(AppTheme.Colors.textDark)
-            .background(AppTheme.Colors.groupedBackground)
+            .navigationTitle("Financial Goals")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         showAddGoalSheet = true
                     }) {
-                        Image(systemName: "pencil")
+                        Image(systemName: "plus")
                             .foregroundColor(AppTheme.Colors.primary)
                     }
                 }
             }
         }
+    }
+}
+
+struct GoalCardView: View {
+    let goal: GoalModel
+    
+    var statusColor: Color {
+        switch goal.status {
+        case .onTrack:
+            return .green
+        case .almostThere:
+            return .purple
+        case .behindSchedule:
+            return .orange
+        }
+    }
+    
+    var statusText: String {
+        switch goal.status {
+        case .onTrack:
+            return "On track"
+        case .almostThere:
+            return "Almost there!"
+        case .behindSchedule:
+            return "Behind schedule"
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(goal.title)
+                        .font(.headline)
+                    Text("Target: \(goal.deadline.formatted(date: .abbreviated, time: .omitted))")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+                Spacer()
+                Button(action: {}) {
+                    Image(systemName: "ellipsis")
+                        .foregroundColor(.gray)
+                }
+            }
+            
+            Text("$\(Int(goal.currentAmount)) of $\(Int(goal.targetAmount))")
+                .font(.subheadline)
+            
+            // Progress Bar
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .frame(width: geometry.size.width, height: 8)
+                        .opacity(0.1)
+                        .foregroundColor(statusColor)
+                    
+                    Rectangle()
+                        .frame(width: geometry.size.width * goal.progress, height: 8)
+                        .foregroundColor(statusColor)
+                }
+                .cornerRadius(4)
+            }
+            .frame(height: 8)
+            
+            HStack {
+                Image(systemName: goal.status == .onTrack ? "checkmark.circle.fill" : 
+                                goal.status == .almostThere ? "flag.fill" : "exclamationmark.triangle.fill")
+                    .foregroundColor(statusColor)
+                Text(statusText)
+                    .font(.caption)
+                    .foregroundColor(statusColor)
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(16)
+        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
     }
 }
 

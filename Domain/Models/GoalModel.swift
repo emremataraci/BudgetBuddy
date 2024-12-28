@@ -5,32 +5,25 @@ struct GoalModel: Identifiable {
     let title: String
     let targetAmount: Double
     let currentAmount: Double
-    let deadline: Date?
-    let category: String
+    let deadline: Date
+    let status: GoalStatus
     
     var progress: Double {
         currentAmount / targetAmount
     }
     
-    init(id: UUID = UUID(), title: String, targetAmount: Double, currentAmount: Double, deadline: Date? = nil, category: String) {
+    init(id: UUID = UUID(), title: String, targetAmount: Double, currentAmount: Double, deadline: Date, status: GoalStatus = .onTrack) {
         self.id = id
         self.title = title
         self.targetAmount = targetAmount
         self.currentAmount = currentAmount
         self.deadline = deadline
-        self.category = category
+        self.status = status
     }
 }
 
-struct GoalCategory: Identifiable {
-    let id: UUID
-    let name: String
-    let icon: String
-    
-    static let categories = [
-        GoalCategory(id: UUID(), name: "Car", icon: "car.fill"),
-        GoalCategory(id: UUID(), name: "Vacation", icon: "airplane"),
-        GoalCategory(id: UUID(), name: "Emergency", icon: "shield.fill"),
-        GoalCategory(id: UUID(), name: "Education", icon: "book.fill")
-    ]
+enum GoalStatus {
+    case onTrack
+    case almostThere
+    case behindSchedule
 } 
