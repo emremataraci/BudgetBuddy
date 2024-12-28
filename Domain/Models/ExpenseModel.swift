@@ -23,10 +23,10 @@ struct ExpenseCategory: Identifiable {
     let color: String
     
     static let categories = [
-        ExpenseCategory(id: UUID(), name: "Shopping", icon: "cart.fill", color: "D2B48C"),
-        ExpenseCategory(id: UUID(), name: "Groceries", icon: "basket.fill", color: "E8D5C4"),
-        ExpenseCategory(id: UUID(), name: "Dining", icon: "fork.knife", color: "D2B48C"),
-        ExpenseCategory(id: UUID(), name: "Health", icon: "heart.fill", color: "E8D5C4")
+        ExpenseCategory(id: UUID(), name: "Other Expenses", icon: "ellipsis.circle.fill", color: "D2B48C"),
+        ExpenseCategory(id: UUID(), name: "Personal", icon: "person.fill", color: "E8D5C4"),
+        ExpenseCategory(id: UUID(), name: "Bills", icon: "doc.text.fill", color: "D2B48C"),
+        ExpenseCategory(id: UUID(), name: "Daily Expenses", icon: "cart.fill", color: "E8D5C4")
     ]
 }
 
