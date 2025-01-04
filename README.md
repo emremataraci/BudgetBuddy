@@ -118,9 +118,7 @@ BudgetBuddy, günlük finansal hayatınızı kolaylaştıran, hedeflerinize ula�
 ## 📞 Destek
 
 Sorularınız ve önerileriniz için:
-- 📧 Email: support@budgetbuddy.com
-- 💬 Twitter: @budgetbuddy
-- 🌐 Website: www.budgetbuddy.com
+- 📧 Email: mtrcemre@gmail.com
 
 ## 📄 Lisans
 
