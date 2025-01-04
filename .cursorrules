@@ -12,14 +12,89 @@ const swiftGuidelines = {
     // Project Structure
     projectStructure: `
     BudgetBuddy/
-      ├── App/          # App delegate, configuration
-      ├── Core/         # Services (Supabase, Analytics, Theme, Bank Integration, Notifications)
-      ├── Features/     # Feature modules (Home, Profile, Goals, Budget, Reports)
-      │   ├── ViewModels/  # State management for features
-      │   ├── Models/      # Feature-specific models (Expenses, Income, etc.)
-      │   ├── Services/    # Business logic (Calculations, Data syncing, etc.)
-      │   └── Views/       # UI components
-      └── Domain/       # Shared models (User, Transactions), utilities (Currency handling, etc.)
+      ├── App/                    # App lifecycle and configuration
+      │   ├── BudgetBuddyApp.swift
+      │   ├── AppDelegate.swift
+      │   └── Configuration/      # Environment configs (dev/prod)
+      │
+      ├── Core/                   # Core functionalities and services
+      │   ├── Network/           # Network layer
+      │   │   ├── APIClient.swift
+      │   │   └── Endpoints/
+      │   ├── Storage/           # Local storage
+      │   │   ├── CoreData/
+      │   │   └── UserDefaults/
+      │   ├── Security/          # Security services
+      │   │   ├── Keychain/
+      │   │   └── Encryption/
+      │   ├── Services/          # App services
+      │   │   ├── Analytics/
+      │   │   ├── Notifications/
+      │   │   └── Location/
+      │   └── Theme/             # App theming
+      │       ├── Colors/
+      │       └── Typography/
+      │
+      ├── Features/              # Feature modules
+      │   ├── Authentication/    # User authentication
+      │   │   ├── Views/
+      │   │   ├── ViewModels/
+      │   │   └── Services/
+      │   ├── Home/             # Home screen
+      │   │   ├── Views/
+      │   │   │   └── Components/
+      │   │   ├── ViewModels/
+      │   │   └── Services/
+      │   ├── Transactions/     # Transaction management
+      │   │   ├── Views/
+      │   │   │   └── Components/
+      │   │   ├── ViewModels/
+      │   │   └── Services/
+      │   ├── Goals/            # Financial goals
+      │   │   ├── Views/
+      │   │   │   └── Components/
+      │   │   ├── ViewModels/
+      │   │   └── Services/
+      │   ├── Budget/           # Budget management
+      │   │   ├── Views/
+      │   │   │   └── Components/
+      │   │   ├── ViewModels/
+      │   │   └── Services/
+      │   ├── Reports/          # Financial reports
+      │   │   ├── Views/
+      │   │   │   └── Components/
+      │   │   ├── ViewModels/
+      │   │   └── Services/
+      │   ├── Profile/          # User profile
+      │   │   ├── Views/
+      │   │   │   └── Components/
+      │   │   ├── ViewModels/
+      │   │   └── Services/
+      │   └── Payments/         # Payment processing
+      │       ├── Views/
+      │       │   └── Components/
+      │       ├── ViewModels/
+      │       └── Services/
+      │
+      ├── Domain/               # Business logic and models
+      │   ├── Models/           # Core data models
+      │   │   ├── User/
+      │   │   ├── Transaction/
+      │   │   ├── Goal/
+      │   │   └── Budget/
+      │   ├── Protocols/        # Interfaces and protocols
+      │   ├── Extensions/       # Swift extensions
+      │   └── Utilities/        # Helper functions
+      │
+      ├── Resources/            # App resources
+      │   ├── Assets.xcassets/  # Images and colors
+      │   ├── Localizable/      # Localization files
+      │   └── Fonts/           # Custom fonts
+      │
+      └── Supporting Files/     # Additional files
+          ├── Info.plist
+          ├── Configuration/    # Build configurations
+          └── LaunchScreen.storyboard
     `,
   
     // Technical Standards
