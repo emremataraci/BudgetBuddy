@@ -43,7 +43,7 @@ Kullanıcıların finansal hedeflerini belirleyebilmeleri, bu hedeflere ulaşmak
 
 ### 3. Veri Modelleri
 
-\`\`\`swift
+```swift
 struct Goal {
     let id: UUID
     var title: String
@@ -97,7 +97,7 @@ struct BudgetNotification {
     var threshold: Decimal
     var isEnabled: Bool
 }
-\`\`\`
+```
 
 ## UI Bileşenleri
 - GoalsListView
@@ -107,30 +107,6 @@ struct BudgetNotification {
 - BudgetOverviewView
 - BudgetCategoryView
 - BudgetSettingsView
-
-## API Endpoints
-
-### Hedef Yönetimi
-\`\`\`
-POST /api/v1/goals
-GET  /api/v1/goals
-GET  /api/v1/goals/{id}
-PUT  /api/v1/goals/{id}
-DELETE /api/v1/goals/{id}
-GET  /api/v1/goals/{id}/progress
-POST /api/v1/goals/{id}/complete
-\`\`\`
-
-### Bütçe Yönetimi
-\`\`\`
-POST /api/v1/budgets
-GET  /api/v1/budgets
-GET  /api/v1/budgets/{id}
-PUT  /api/v1/budgets/{id}
-DELETE /api/v1/budgets/{id}
-GET  /api/v1/budgets/{id}/progress
-GET  /api/v1/budgets/categories/{id}/analysis
-\`\`\`
 
 ## İş Mantığı
 - Hedef ilerleme hesaplaması
@@ -149,20 +125,22 @@ GET  /api/v1/budgets/categories/{id}/analysis
 ## Aşamalar
 1. Hedef yönetimi temel özellikleri
 2. Bütçe yönetimi temel özellikleri
-3. İlerleme takip sistemi
-4. Bildirim sistemi
-5. Raporlama ve analiz
-6. Test ve optimizasyon
+3. API entegrasyonları
+4. İlerleme takip sistemi
+5. Bildirim sistemi
+6. Raporlama ve analiz
+7. Test ve optimizasyon
 
 ## Zaman Tahmini
 - Hedef Yönetimi: 1 hafta
 - Bütçe Yönetimi: 1 hafta
+- API Entegrasyonları: 1 hafta
 - İlerleme Takibi: 3 gün
 - Bildirim Sistemi: 3 gün
 - Raporlama: 4 gün
 - Test ve Optimizasyon: 1 hafta
 
-Toplam: ~4 hafta
+Toplam: ~5 hafta
 
 ## Riskler
 - Karmaşık hedef hesaplamalarının performans etkileri

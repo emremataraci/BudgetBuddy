@@ -44,7 +44,7 @@ Kullanıcıların gelir ve giderlerini kolayca takip edebilmeleri, kategorize ed
 
 ### 3. Veri Modelleri
 
-\`\`\`swift
+```swift
 struct Transaction {
     let id: UUID
     var amount: Decimal
@@ -95,7 +95,7 @@ struct Location {
     var longitude: Double
     var placeName: String?
 }
-\`\`\`
+```
 
 ## UI Bileşenleri
 - NewTransactionView
@@ -105,33 +105,6 @@ struct Location {
 - RecurringTransactionView
 - AttachmentPickerView
 - LocationPickerView
-
-## API Endpoints
-
-### İşlem Yönetimi
-\`\`\`
-POST /api/v1/transactions
-GET  /api/v1/transactions
-GET  /api/v1/transactions/{id}
-PUT  /api/v1/transactions/{id}
-DELETE /api/v1/transactions/{id}
-\`\`\`
-
-### Kategori Yönetimi
-\`\`\`
-GET  /api/v1/categories
-POST /api/v1/categories
-PUT  /api/v1/categories/{id}
-DELETE /api/v1/categories/{id}
-\`\`\`
-
-### Tekrarlayan İşlemler
-\`\`\`
-POST /api/v1/recurring-transactions
-GET  /api/v1/recurring-transactions
-PUT  /api/v1/recurring-transactions/{id}
-DELETE /api/v1/recurring-transactions/{id}
-\`\`\`
 
 ## Depolama Gereksinimleri
 - CoreData ile yerel depolama
@@ -149,20 +122,22 @@ DELETE /api/v1/recurring-transactions/{id}
 ## Aşamalar
 1. Temel işlem yönetimi
 2. Kategori sistemi
-3. Tekrarlayan işlemler
-4. Dosya ekleme sistemi
-5. Offline mod
-6. Test ve optimizasyon
+3. API entegrasyonları
+4. Tekrarlayan işlemler
+5. Dosya ekleme sistemi
+6. Offline mod
+7. Test ve optimizasyon
 
 ## Zaman Tahmini
 - Temel İşlem Yönetimi: 1 hafta
 - Kategori Sistemi: 3 gün
+- API Entegrasyonları: 1 hafta
 - Tekrarlayan İşlemler: 4 gün
 - Dosya Ekleme: 3 gün
 - Offline Mod: 4 gün
 - Test ve Optimizasyon: 1 hafta
 
-Toplam: ~4 hafta
+Toplam: ~5 hafta
 
 ## Riskler
 - Offline-online senkronizasyon çakışmaları

@@ -33,7 +33,7 @@ Kullanıcıların güvenli bir şekilde ödeme yapabilmeleri, ödemeleri yönete
 
 ### 3. Veri Modelleri
 
-\`\`\`swift
+```swift
 struct PaymentMethod {
     let id: UUID
     var stripePaymentMethodId: String
@@ -86,7 +86,7 @@ enum SubscriptionPlan {
     case premium
     case enterprise
 }
-\`\`\`
+```
 
 ## UI Bileşenleri
 - PaymentMethodsView
@@ -95,31 +95,6 @@ enum SubscriptionPlan {
 - SubscriptionManagementView
 - PaymentDetailsView
 - RefundRequestView
-
-## API Endpoints
-
-### Ödeme Yönetimi
-\`\`\`
-POST /api/v1/payment-methods
-GET  /api/v1/payment-methods
-DELETE /api/v1/payment-methods/{id}
-PUT  /api/v1/payment-methods/{id}/default
-
-POST /api/v1/payments
-GET  /api/v1/payments
-GET  /api/v1/payments/{id}
-POST /api/v1/payments/{id}/refund
-
-POST /api/v1/subscriptions
-GET  /api/v1/subscriptions
-PUT  /api/v1/subscriptions/{id}
-DELETE /api/v1/subscriptions/{id}
-\`\`\`
-
-### Stripe Webhook Endpoints
-\`\`\`
-POST /api/v1/webhooks/stripe
-\`\`\`
 
 ## Güvenlik Gereksinimleri
 - PCI DSS uyumluluğu için gerekli önlemler
@@ -139,20 +114,22 @@ POST /api/v1/webhooks/stripe
 ## Aşamalar
 1. Stripe SDK entegrasyonu
 2. Ödeme yönetimi UI
-3. Backend API entegrasyonu
-4. Webhook yönetimi
-5. Test ve güvenlik kontrolleri
-6. Canlıya alma hazırlıkları
+3. API entegrasyonları
+4. Backend API entegrasyonu
+5. Webhook yönetimi
+6. Test ve güvenlik kontrolleri
+7. Canlıya alma hazırlıkları
 
 ## Zaman Tahmini
 - SDK Entegrasyonu: 3 gün
 - Ödeme UI: 4 gün
+- API Entegrasyonları: 5 gün
 - Backend API: 4 gün
 - Webhook: 2 gün
 - Test ve Güvenlik: 5 gün
 - Dokümantasyon: 2 gün
 
-Toplam: ~3 hafta
+Toplam: ~4 hafta
 
 ## Riskler
 - PCI uyumluluk gereksinimleri
